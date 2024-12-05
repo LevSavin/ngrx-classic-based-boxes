@@ -2,7 +2,7 @@ import { IOption } from '../types';
 
 export const localStorageKey: string = 'NgrxClassicBasedBoxes';
 
-export const options: readonly IOption[] = [
+export const options = ():IOption[] => [
   {
     id: 0,
     label: 'A',

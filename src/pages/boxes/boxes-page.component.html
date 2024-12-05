@@ -7,16 +7,16 @@
       }
     </div>
     <div class="boxes__selection-result">
-      <button (click)="selectionService.clearBoxes()">X</button>
+      <button (click)="clearBoxes()">X</button>
       <span>Total value:</span>
-      <b>{{ selectionService.getTotalValue() }}</b>
+      <b>{{ totalValue$ | async }}</b>
     </div>
   </div>
-  @if (selectionService.activeBoxId.value) {
+  @if (activeBoxId$ | async) {
   <div class="boxes__options">
     Choose option
     <div class="boxes__options-wrapper">
-      @for (option of selectionService.options; track option.id) {
+      @for (option of options$ | async; track option.id) {
       <app-option [option]="option"></app-option>
       }
     </div>

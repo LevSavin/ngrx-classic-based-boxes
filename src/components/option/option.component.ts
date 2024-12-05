@@ -5,9 +5,13 @@ import {
   Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IOption } from '../../types';
+import { IBox, IOption } from '../../types';
 import { defaultOption } from '../../constants';
-import { SelectionService } from '../../services/selection.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { BoxesState } from '../../state/boxes/boxes.reducers';
+import * as BoxesActions from '../../state/boxes/boxes.actions'
+import * as BoxesSelectors from '../../state/boxes/boxes.selectors'
 
 @Component({
   selector: 'app-option',
@@ -18,6 +22,11 @@ import { SelectionService } from '../../services/selection.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionComponent {
+  readonly store = inject(Store<BoxesState>);
   @Input({ required: true }) option: IOption = defaultOption;
-  protected readonly selectionService = inject(SelectionService);
+  activeBox$: Observable<IBox | null> = this.store.select(BoxesSelectors.selectActiveBox);
+
+  selectOption(option: IOption) {
+    this.store.dispatch(BoxesActions.selectOption({option}));
+  }
 }

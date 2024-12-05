@@ -7,7 +7,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { IBox } from '../../types';
 import { defaultBox } from '../../constants';
-import { SelectionService } from '../../services/selection.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { BoxesState } from '../../state/boxes/boxes.reducers';
+import * as BoxesActions from '../../state/boxes/boxes.actions'
+import * as BoxesSelectors from '../../state/boxes/boxes.selectors'
 
 @Component({
   selector: 'app-box-item',
@@ -18,7 +22,12 @@ import { SelectionService } from '../../services/selection.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoxItemComponent {
+  readonly store = inject(Store<BoxesState>);
   @Input({ required: true }) box: IBox = defaultBox;
   @Input({ required: true }) index: number = 0;
-  protected readonly selectionService = inject(SelectionService);
+  activeBoxId$: Observable<number | null> = this.store.select(BoxesSelectors.selectActiveBoxId);
+
+  selectBox(id: number) {
+    this.store.dispatch(BoxesActions.selectBox({id}));
+  }
 }

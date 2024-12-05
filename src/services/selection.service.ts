@@ -7,10 +7,10 @@ import { options, localStorageKey } from '../constants';
   providedIn: 'root',
 })
 export class SelectionService {
-  activeBoxId = new BehaviorSubject<number | null>(null);
+  /* activeBoxId = new BehaviorSubject<number | null>(null);
   activeBox = new BehaviorSubject<IBox | null>(null);
   boxes = new BehaviorSubject<IBox[]>([]);
-  options: readonly IOption[] = options;
+  options: readonly IOption[] = options(); */
 
   constructor() {
     //this.initData();
@@ -31,12 +31,12 @@ export class SelectionService {
     }));
   } */
 
-  saveData(): void {
+  /* saveData(): void {
     const data: ILSData = { boxes: this.boxes.value };
     localStorage.setItem(localStorageKey, JSON.stringify(data));
-  }
+  } */
 
-  selectBox(id: number): void {
+  /* selectBox(id: number): void {
     this.activeBoxId.next(id);
     const index = this.boxes.value.findIndex(
       (el) => el.id === this.activeBoxId.value
@@ -46,9 +46,9 @@ export class SelectionService {
       box = this.boxes.value[index];
     }
     this.activeBox.next(box);
-  }
+  } */
 
-  selectOption(option: IOption): void {
+  /* selectOption(option: IOption): void {
     const boxes = structuredClone(this.boxes.value);
     const idx = boxes.findIndex((el) => el.id === this.activeBoxId.value);
     if (idx !== -1) {
@@ -66,9 +66,9 @@ export class SelectionService {
     this.activeBoxId.next(nextId);
     this.activeBox.next(structuredClone(box));
     this.saveData();
-  }
+  } */
 
-  clearBoxes(): void {
+  /* clearBoxes(): void {
     const boxes = structuredClone(this.boxes.value);
     boxes.forEach((box) => {
       box.option = null;
@@ -80,11 +80,11 @@ export class SelectionService {
       this.activeBox.next(box);
     }
     localStorage.removeItem(localStorageKey);
-  }
+  } */
 
-  getTotalValue(): number {
+  /* getTotalValue(): number {
     return +this.boxes.value
       .reduce((acc, box) => acc + (box?.option?.value || 0), 0)
       .toFixed(2);
-  }
+  } */
 }

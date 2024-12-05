@@ -2,9 +2,9 @@
   class="option"
   [class]="{
     'option--active':
-      (this.selectionService.activeBox | async)?.option?.id === option.id
+      (activeBox$ | async)?.option?.id === option.id
   }"
-  (click)="selectionService.selectOption(option)"
+  (click)="selectOption(option)"
 >
   <div class="option__label">{{ option.label }}</div>
 </div>
