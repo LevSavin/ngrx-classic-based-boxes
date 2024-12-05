@@ -2,7 +2,7 @@ import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { BoxItemComponent } from '../../components/box-item/box-item.component';
 import { OptionComponent } from '../../components/option/option.component';
-import type { IBox, IOption } from '../../types';
+import type { IBox, IOption, IExample } from '../../types';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { BoxesState } from '../../state/boxes/boxes.reducers';
@@ -23,9 +23,11 @@ export class BoxesPageComponent implements OnInit {
   options$: Observable<IOption[]> = this.store.select(BoxesSelectors.selectOptions);
   activeBoxId$: Observable<number | null> = this.store.select(BoxesSelectors.selectActiveBoxId);
   totalValue$: Observable<number> = this.store.select(BoxesSelectors.selectTotalValue);
+  example$: Observable<IExample | null> = this.store.select(BoxesSelectors.selectExample);
 
   ngOnInit(): void {
     this.store.dispatch(BoxesActions.initBoxes());
+    this.store.dispatch(BoxesActions.loadExample({id: 1})); // just test data as loading example
   }
 
   clearBoxes() {

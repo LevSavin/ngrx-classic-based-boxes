@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { IBox, IOption, ILSData } from '../../types';
+import { IBox, IOption, ILSData, IExample } from '../../types';
 import * as BoxesActions from './boxes.actions';
 import { options } from '../../constants';
 
@@ -8,6 +8,7 @@ export interface BoxesState {
   options: IOption[];
   activeBoxId: number | null;
   activeBox: IBox | null;
+  example: IExample | null;
   loading: boolean;
   error: any;
 }
@@ -17,6 +18,7 @@ export const initialState: BoxesState = {
   options: options(),
   activeBoxId: null,
   activeBox: null,
+  example: null,
   loading: false,
   error: null,
 };
@@ -63,9 +65,8 @@ export const boxesReducer = createReducer(
     boxes.forEach((box) => {
       box.option = null;
     });
-    const box = state.activeBox;
-    if (box && 'option' in box) {
-      console.log(box, state.activeBox)
+    const box = structuredClone(state.activeBox);
+    if (box?.option) {
       box.option = null;
     }
     return {
@@ -74,4 +75,16 @@ export const boxesReducer = createReducer(
       activeBox: box
     }
   }),
+  on(BoxesActions.loadExample, state => ({ ...state, loading: true })),
+  on(BoxesActions.loadExampleSuccess, (state, { example }) => ({
+    ...state,
+    example,
+    loading: false,
+    error: null,
+  })),
+  on(BoxesActions.loadExampleFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 );

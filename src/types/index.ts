@@ -12,3 +12,10 @@ export interface IOption {
 export interface ILSData {
   boxes: IBox[];
 }
+
+export interface IExample {
+  userId: number,
+  id: number,
+  title: string,
+  completed: boolean
+}

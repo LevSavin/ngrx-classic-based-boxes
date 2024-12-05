@@ -1,26 +1,26 @@
 @if (boxes$ | async; as boxes) {
-<div class="boxes">
-  <div class="boxes__selection">
-    <div class="boxes__selection-wrapper">
-      @for (box of boxes; track box.id; let i = $index) {
-      <app-box-item [box]="box" [index]="i"></app-box-item>
-      }
+  <div class="boxes">
+    <div class="boxes__selection">
+      <div class="boxes__selection-wrapper">
+        @for (box of boxes; track box.id; let i = $index) {
+        <app-box-item [box]="box" [index]="i"></app-box-item>
+        }
+      </div>
+      <div class="boxes__selection-result">
+        <button (click)="clearBoxes()">X</button>
+        <span>Total value:</span>
+        <b>{{ totalValue$ | async }}</b>
+      </div>
     </div>
-    <div class="boxes__selection-result">
-      <button (click)="clearBoxes()">X</button>
-      <span>Total value:</span>
-      <b>{{ totalValue$ | async }}</b>
+    @if (activeBoxId$ | async) {
+    <div class="boxes__options">
+      Choose option
+      <div class="boxes__options-wrapper">
+        @for (option of options$ | async; track option.id) {
+        <app-option [option]="option"></app-option>
+        }
+      </div>
     </div>
+    }
   </div>
-  @if (activeBoxId$ | async) {
-  <div class="boxes__options">
-    Choose option
-    <div class="boxes__options-wrapper">
-      @for (option of options$ | async; track option.id) {
-      <app-option [option]="option"></app-option>
-      }
-    </div>
-  </div>
-  }
-</div>
 }

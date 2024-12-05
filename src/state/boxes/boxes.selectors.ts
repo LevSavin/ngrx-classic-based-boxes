@@ -12,5 +12,6 @@ export const selectTotalValue = createSelector(selectBoxesState, (state) => {
     .reduce((acc, box) => acc + (box?.option?.value || 0), 0)
     .toFixed(2);
 });
+export const selectExample = createSelector(selectBoxesState, (state) => state.example);
 
 

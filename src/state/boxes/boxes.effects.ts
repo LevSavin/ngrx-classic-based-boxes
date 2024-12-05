@@ -1,18 +1,21 @@
 import { Injectable, inject } from '@angular/core';
-import { Actions, createEffect, ofType, provideEffects } from '@ngrx/effects';
 import { of, tap, switchMap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import * as BoxesActions from './boxes.actions';
-import { options, localStorageKey } from '../../constants';
-import { IBox, IOption, ILSData } from '../../types';
+
 import { Store, select } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import * as BoxesActions from './boxes.actions';
 import { selectBoxes } from './boxes.selectors'
+
+import { SelectionService } from '../../services/selection.service'
+import { IBox, ILSData } from '../../types';
+import { localStorageKey } from '../../constants';
 
 @Injectable()
 export class BoxesEffects {
   private store = inject(Store);
   private actions$ = inject(Actions);
-  //private drawingsApiService = inject(DrawingsApiService);
+  private selectionService = inject(SelectionService);
 
   getEmptyBoxes(): IBox[] {
     return new Array(10).fill(null).map((_, index) => ({
@@ -62,5 +65,17 @@ export class BoxesEffects {
       })
     ),
     { dispatch: false }
+  );
+
+  createDrawing$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BoxesActions.loadExample),
+      mergeMap((action) => {
+        return this.selectionService.getExample(action.id).pipe(
+          map((example) => BoxesActions.loadExampleSuccess({example})),
+          catchError(error => of(BoxesActions.loadExampleFailure({ error })))
+        )
+      })
+    )
   );
 }
