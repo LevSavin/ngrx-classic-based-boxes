@@ -1,0 +1,22 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  row-gap: 8px;
+  box-shadow: 3px 1px 18px 0px rgba(48, 50, 50, 0.15);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  min-height: 72px;
+  &--active {
+    background-color: #ffe7c3;
+  }
+  &__number {
+    font-size: 12px;
+  }
+  &__value {
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
