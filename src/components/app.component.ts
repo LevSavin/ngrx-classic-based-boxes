@@ -14,5 +14,5 @@ export class AppComponent {
 
   ngOnInit() {
     console.log(this.environmentService.getEnvironment());
-  } 
+  }
 }
