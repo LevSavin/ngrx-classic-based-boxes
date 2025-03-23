@@ -11,7 +11,7 @@ frontend:
       commands:
         - npm run build -- --configuration=production
   artifacts:
-    baseDirectory: dist/aws
+    baseDirectory: dist/aws/browser
     files:
       - '**/*'
   cache:
